@@ -7,6 +7,12 @@ Markov switching models for time series with structural breaks.
 import sys
 from pathlib import Path
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 # Add src to path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -40,12 +46,12 @@ def main():
         value_column=config["data"].get("value_col", "value")
     )
     
-    print(f"Loaded {len(series)} data points")
+    logger.info(f"Loaded {len(series)} data points")
     
     data = series.values
     
     # Fit Markov switching model
-    print("\nFitting Markov switching model...")
+    logger.info("\nFitting Markov switching model...")
     model = MarkovRegression(
         data,
         k_regimes=config["model"]["k_regimes"],
@@ -54,17 +60,17 @@ def main():
     )
     
     result = model.fit()
-    print("\nMarkov Switching Model Results:")
-    print("=" * 70)
-    print(result.summary())
+    logger.info("\nMarkov Switching Model Results:")
+    logger.info("=" * 70)
+    logger.info(result.summary())
     
-    print("\nTransition Matrix:")
-    print(result.regime_transition)
+    logger.info("\nTransition Matrix:")
+    logger.info(result.regime_transition)
     
     smoothed_probs = result.smoothed_marginal_probabilities
     
     # Create visualization
-    print("\nCreating visualization...")
+    logger.info("\nCreating visualization...")
     fig, axes = plt.subplots(2, 1, figsize=(15, 10), sharex=True)
     
     axes[0].plot(
@@ -97,9 +103,9 @@ def main():
     plt.tight_layout()
     output_dir = ensure_output_dir(get_output_dir(config, script_dir))
     save_plot(fig, output_dir / "regime_switching.png", dpi=300)
-    print(f"Plot saved to: {output_dir / 'regime_switching.png'}")
+    logger.info(f"Plot saved to: {output_dir / 'regime_switching.png'}")
     
-    print("\n Regime switching analysis complete")
+    logger.info("\n Regime switching analysis complete")
     
     if config.get("plotting", {}).get("show_plot", True):
         plt.show()

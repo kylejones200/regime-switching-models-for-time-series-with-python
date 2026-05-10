@@ -32,7 +32,7 @@ from src import (
 from statsmodels.tsa.regime_switching.markov_regression import MarkovRegression
 
 
-def main():
+def main(plot: bool = False):
     """Main execution function."""
     script_dir = Path(__file__).parent
     
@@ -71,46 +71,47 @@ def main():
     
     # Create visualization
     logger.info("\nCreating visualization...")
-    fig, axes = plt.subplots(2, 1, figsize=(15, 10), sharex=True)
+    if plot:
+        fig, axes = plt.subplots(2, 1, figsize=(15, 10), sharex=True)
     
-    axes[0].plot(
-        series.index,
-        data,
-        "k-",
-        linewidth=config.get("plotting", {}).get("linewidth", 1.5),
-        alpha=config.get("plotting", {}).get("alpha", 0.8),
-        label="Time Series",
-    )
-    axes[0].set_title(config.get("plot_titles", {}).get("regime_switching", "Regime Switching Model"))
-    axes[0].set_ylabel("Value")
-    axes[0].legend(loc="best")
-    axes[0].grid(True, alpha=0.3)
-    
-    for regime in range(config["model"]["k_regimes"]):
-        axes[1].plot(
+        axes[0].plot(
             series.index,
-            smoothed_probs[:, regime],
+            data,
+            "k-",
             linewidth=config.get("plotting", {}).get("linewidth", 1.5),
             alpha=config.get("plotting", {}).get("alpha", 0.8),
-            label=f"Regime {regime + 1} Probability",
+            label="Time Series",
         )
-    axes[1].set_title("Smoothed Regime Probabilities")
-    axes[1].set_ylabel("Probability")
-    axes[1].set_xlabel("Date")
-    axes[1].legend(loc="best")
-    axes[1].grid(True, alpha=0.3)
+        axes[0].set_title(config.get("plot_titles", {}).get("regime_switching", "Regime Switching Model"))
+        axes[0].set_ylabel("Value")
+        axes[0].legend(loc="best")
+        axes[0].grid(True, alpha=0.3)
     
-    plt.tight_layout()
-    output_dir = ensure_output_dir(get_output_dir(config, script_dir))
-    save_plot(fig, output_dir / "regime_switching.png", dpi=300)
-    logger.info(f"Plot saved to: {output_dir / 'regime_switching.png'}")
+        for regime in range(config["model"]["k_regimes"]):
+            axes[1].plot(
+                series.index,
+                smoothed_probs[:, regime],
+                linewidth=config.get("plotting", {}).get("linewidth", 1.5),
+                alpha=config.get("plotting", {}).get("alpha", 0.8),
+                label=f"Regime {regime + 1} Probability",
+            )
+        axes[1].set_title("Smoothed Regime Probabilities")
+        axes[1].set_ylabel("Probability")
+        axes[1].set_xlabel("Date")
+        axes[1].legend(loc="best")
+        axes[1].grid(True, alpha=0.3)
     
-    logger.info("\n Regime switching analysis complete")
+        plt.tight_layout()
+        output_dir = ensure_output_dir(get_output_dir(config, script_dir))
+        save_plot(fig, output_dir / "regime_switching.png", dpi=300)
+        logger.info(f"Plot saved to: {output_dir / 'regime_switching.png'}")
     
-    if config.get("plotting", {}).get("show_plot", True):
-        plt.show()
-    else:
-        plt.close(fig)
+        logger.info("\n Regime switching analysis complete")
+    
+        if config.get("plotting", {}).get("show_plot", True):
+            plt.show()
+        else:
+            plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -61,7 +61,6 @@ def main(plot: bool = False):
     
     result = model.fit()
     logger.info("\nMarkov Switching Model Results:")
-    logger.info("=" * 70)
     logger.info(result.summary())
     
     logger.info("\nTransition Matrix:")

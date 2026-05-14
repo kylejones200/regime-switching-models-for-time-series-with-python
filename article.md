@@ -8,13 +8,13 @@ In this article, we'll explore regime switching models, their applications, and 
 
 Regime switching models, introduced by James Hamilton in 1989, capture structural changes in time series data by allowing transitions between different states or regimes. These models are particularly useful in:
 
-- **Economics:** Modeling recessions and expansions.
+- Economics: Modeling recessions and expansions.
 
-- **Finance:** Analyzing bull and bear markets.
+- Finance: Analyzing bull and bear markets.
 
-- **Energy:** Detecting shifts in demand or production trends.
+- Energy: Detecting shifts in demand or production trends.
 
-- **Weather:** Capturing transitions between climatic states.
+- Weather: Capturing transitions between climatic states.
 
 The most common type of regime switching model is the Markov Switching Model, where regime transitions follow a Markov process.
 
@@ -73,7 +73,7 @@ Regime switching can also be used for feature engineering for time series classi
 
 ## Key Takeaways
 
-- **Economics:** Modeling recessions and expansions.
-- **Finance:** Analyzing bull and bear markets.
-- **Energy:** Detecting shifts in demand or production trends.
-- **Weather:** Capturing transitions between climatic states.
+- Economics: Modeling recessions and expansions.
+- Finance: Analyzing bull and bear markets.
+- Energy: Detecting shifts in demand or production trends.
+- Weather: Capturing transitions between climatic states.

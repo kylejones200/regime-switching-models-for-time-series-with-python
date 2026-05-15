@@ -4,7 +4,6 @@ Regime Switching Models for Time Series
 Markov switching models for time series with structural breaks.
 """
 
-import sys
 from pathlib import Path
 
 import logging
@@ -15,8 +14,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 # Add src to path
 
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 # Import consolidated utilities (signalplot already applied in src/__init__.py)
